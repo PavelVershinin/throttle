@@ -7,8 +7,6 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/PavelVershinin/throttle"
 )
 
@@ -17,7 +15,7 @@ func TestThrottle(t *testing.T) {
 	th := throttle.New(5, time.Millisecond)
 
 	// Ни одного задания не добавлено, задания будут обработаны без очереди
-	assert.Equal(t, true, th.QueueIsFree())
+	require.Equal(t, true, th.QueueIsFree())
 
 	for i := 0; i < 5; i++ {
 		th.Push(func() {
@@ -26,7 +24,7 @@ func TestThrottle(t *testing.T) {
 	}
 
 	// Добавлено 5 заданий, очередь занята
-	assert.Equal(t, false, th.QueueIsFree())
+	require.Equal(t, false, th.QueueIsFree())
 
 	for i := 0; i < 15; i++ {
 		th.Push(func() {
